@@ -12,7 +12,7 @@ class DestinationEntity extends Equatable {
   final List<String> images;
   final List<String> facilities;
 
-  DestinationEntity({
+  const DestinationEntity({
     required this.id,
     required this.name,
     required this.category,
@@ -41,30 +41,3 @@ class DestinationEntity extends Equatable {
     ];
   }
 }
-
-// void main(List<String> args) {
-//   DestinationEntity destination1 = DestinationEntity(
-//       id: 'id',
-//       name: 'name',
-//       category: 'category',
-//       cover: 'cover',
-//       rate: 1,
-//       rateCount: 1,
-//       location: 'location',
-//       description: 'description',
-//       images: [''],
-//       facilities: ['']);
-//   DestinationEntity destination2 = DestinationEntity(
-//       id: '2',
-//       name: 'name',
-//       category: 'category',
-//       cover: 'cover',
-//       rate: 1,
-//       rateCount: 1,
-//       location: 'location',
-//       description: 'description',
-//       images: [''],
-//       facilities: ['']);
-
-//   print(destination1 == destination2);
-// }

@@ -1,17 +1,18 @@
 import 'package:taufiqsejati_travel/features/destination/domain/entities/destination_entity.dart';
 
 class DestinationModel extends DestinationEntity {
-  DestinationModel(
-      {required super.id,
-      required super.name,
-      required super.category,
-      required super.cover,
-      required super.rate,
-      required super.rateCount,
-      required super.location,
-      required super.description,
-      required super.images,
-      required super.facilities});
+  DestinationModel({
+    required super.id,
+    required super.name,
+    required super.category,
+    required super.cover,
+    required super.rate,
+    required super.rateCount,
+    required super.location,
+    required super.description,
+    required super.images,
+    required super.facilities,
+  });
 
   factory DestinationModel.fromJson(Map<String, dynamic> json) =>
       DestinationModel(
@@ -41,14 +42,15 @@ class DestinationModel extends DestinationEntity {
       };
 
   DestinationEntity get toEntity => DestinationEntity(
-      id: id,
-      name: name,
-      category: category,
-      cover: cover,
-      rate: rate,
-      rateCount: rateCount,
-      location: location,
-      description: description,
-      images: images,
-      facilities: facilities);
+        id: id,
+        name: name,
+        category: category,
+        cover: cover,
+        rate: rate,
+        rateCount: rateCount,
+        location: location,
+        description: description,
+        images: images,
+        facilities: facilities,
+      );
 }

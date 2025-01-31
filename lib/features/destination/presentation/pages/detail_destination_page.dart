@@ -32,6 +32,7 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
           Row(
             children: [
               Expanded(
+                flex: 1,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -41,13 +42,16 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
                   ],
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  rate(),
-                  const SizedBox(height: 4),
-                  rateCount(),
-                ],
+              Expanded(
+                flex: 1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    rate(),
+                    const SizedBox(height: 32),
+                    rateCount(),
+                  ],
+                ),
               ),
             ],
           ),
@@ -231,22 +235,31 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
   Widget location() {
     return Row(
       children: [
-        Container(
-          width: 20,
-          height: 20,
-          alignment: Alignment.centerLeft,
-          child: Icon(
-            Icons.location_on,
-            color: Theme.of(context).primaryColor,
-            size: 20,
+        Expanded(
+          flex: 1,
+          child: Container(
+            width: 20,
+            height: 20,
+            alignment: Alignment.centerLeft,
+            child: Icon(
+              Icons.location_on,
+              color: Theme.of(context).primaryColor,
+              size: 20,
+            ),
           ),
         ),
         const SizedBox(width: 4),
-        Text(
-          widget.destination.location,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.black54,
+        Expanded(
+          flex: 5,
+          child: Text(
+            widget.destination.location,
+            maxLines: 2,
+            textAlign: TextAlign.start,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black54,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
       ],

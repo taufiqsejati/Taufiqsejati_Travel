@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
 import 'package:taufiqsejati_travel/core/error/exceptions.dart';
 import 'package:taufiqsejati_travel/core/error/failures.dart';
 import 'package:taufiqsejati_travel/core/platform/network_info.dart';
@@ -9,16 +8,18 @@ import 'package:taufiqsejati_travel/features/destination/data/datasource/destina
 import 'package:taufiqsejati_travel/features/destination/data/datasource/destination_remote_data_source.dart';
 import 'package:taufiqsejati_travel/features/destination/domain/entities/destination_entity.dart';
 import 'package:taufiqsejati_travel/features/destination/domain/repositories/destination_repository.dart';
+import 'package:dartz/dartz.dart';
 
 class DestinationRepositoryImpl implements DestinationRepository {
   final NetworkInfo networkInfo;
   final DestinationLocalDataSource localDataSource;
   final DestinationRemoteDataSource remoteDataSource;
 
-  DestinationRepositoryImpl(
-      {required this.networkInfo,
-      required this.localDataSource,
-      required this.remoteDataSource});
+  DestinationRepositoryImpl({
+    required this.networkInfo,
+    required this.localDataSource,
+    required this.remoteDataSource,
+  });
 
   @override
   Future<Either<Failure, List<DestinationEntity>>> all() async {
@@ -30,10 +31,13 @@ class DestinationRepositoryImpl implements DestinationRepository {
         return Right(result.map((e) => e.toEntity).toList());
       } on TimeoutException {
         return const Left(TimeoutFailure('Timeout. No Response'));
-      } on NotFoundException {
-        return const Left(NotFoundFailure('Data Not Found'));
+      } on NotFoundException catch (e) {
+        return Left(NotFoundFailure(e.message.toString()));
+        // return const Left(NotFoundFailure('Data Not Found'));
       } on ServerException {
         return const Left(ServerFailure('Server Error'));
+      } catch (e) {
+        return const Left(ServerFailure('Something went wrong'));
       }
     } else {
       try {
@@ -52,12 +56,15 @@ class DestinationRepositoryImpl implements DestinationRepository {
       return Right(result.map((e) => e.toEntity).toList());
     } on TimeoutException {
       return const Left(TimeoutFailure('Timeout. No Response'));
-    } on NotFoundException {
-      return const Left(NotFoundFailure('Data Not Found'));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message.toString()));
+      // return const Left(NotFoundFailure('Data Not Found'));
     } on ServerException {
       return const Left(ServerFailure('Server Error'));
     } on SocketException {
-      return const Left(ConnectionFailure('Dailed connect to the network'));
+      return const Left(ConnectionFailure('Failed connect to the network'));
+    } catch (e) {
+      return const Left(ServerFailure('Something went wrong'));
     }
   }
 
@@ -68,12 +75,15 @@ class DestinationRepositoryImpl implements DestinationRepository {
       return Right(result.map((e) => e.toEntity).toList());
     } on TimeoutException {
       return const Left(TimeoutFailure('Timeout. No Response'));
-    } on NotFoundException {
-      return const Left(NotFoundFailure('Data Not Found'));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message.toString()));
+      // return const Left(NotFoundFailure('Data Not Found'));
     } on ServerException {
       return const Left(ServerFailure('Server Error'));
     } on SocketException {
-      return const Left(ConnectionFailure('Dailed connect to the network'));
+      return const Left(ConnectionFailure('Failed connect to the network'));
+    } catch (e) {
+      return const Left(ServerFailure('Something went wrong'));
     }
   }
 }

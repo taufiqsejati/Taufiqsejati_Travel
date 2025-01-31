@@ -13,7 +13,7 @@ class SearchDestinationBloc
   SearchDestinationBloc(this._useCase) : super(SearchDestinationInitial()) {
     on<OnSearchDestination>((event, emit) async {
       emit(SearchDestinationLoading());
-      final result = await _useCase(event.query);
+      final result = await _useCase(query: event.query);
       result.fold(
         (failure) => emit(SearchDestinationFailure(failure.message)),
         (data) => emit(SearchDestinationLoaded(data)),

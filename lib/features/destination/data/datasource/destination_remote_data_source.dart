@@ -18,14 +18,17 @@ class DestinationRemoteDataSourceImpl implements DestinationRemoteDataSource {
 
   @override
   Future<List<DestinationModel>> all() async {
-    Uri uri = Uri.parse('${URLs.base}/destination/all.php');
-    final response = await client.get(uri).timeout(const Duration(seconds: 3));
-
+    Uri url = Uri.parse('${URLs.base}/destination/all.php');
+    final response = await client.get(url).timeout(
+          const Duration(seconds: 3),
+        );
     if (response.statusCode == 200) {
       List list = jsonDecode(response.body);
       return list.map((e) => DestinationModel.fromJson(e)).toList();
     } else if (response.statusCode == 404) {
-      throw NotFoundException();
+      Map body = jsonDecode(response.body);
+      throw NotFoundException(body['message']);
+      // throw NotFoundException();
     } else {
       throw ServerException();
     }
@@ -33,15 +36,19 @@ class DestinationRemoteDataSourceImpl implements DestinationRemoteDataSource {
 
   @override
   Future<List<DestinationModel>> search(String query) async {
-    Uri uri = Uri.parse('${URLs.base}/destination/search.php');
-    final response = await client
-        .post(uri, body: {'query': query}).timeout(const Duration(seconds: 3));
-
+    Uri url = Uri.parse('${URLs.base}/destination/search.php');
+    final response = await client.post(url, body: {
+      'query': query,
+    }).timeout(
+      const Duration(seconds: 3),
+    );
     if (response.statusCode == 200) {
       List list = jsonDecode(response.body);
       return list.map((e) => DestinationModel.fromJson(e)).toList();
     } else if (response.statusCode == 404) {
-      throw NotFoundException();
+      Map body = jsonDecode(response.body);
+      throw NotFoundException(body['message']);
+      // throw NotFoundException();
     } else {
       throw ServerException();
     }
@@ -49,14 +56,17 @@ class DestinationRemoteDataSourceImpl implements DestinationRemoteDataSource {
 
   @override
   Future<List<DestinationModel>> top() async {
-    Uri uri = Uri.parse('${URLs.base}/destination/top.php');
-    final response = await client.get(uri).timeout(const Duration(seconds: 3));
-
+    Uri url = Uri.parse('${URLs.base}/destination/top.php');
+    final response = await client.get(url).timeout(
+          const Duration(seconds: 3),
+        );
     if (response.statusCode == 200) {
       List list = jsonDecode(response.body);
       return list.map((e) => DestinationModel.fromJson(e)).toList();
     } else if (response.statusCode == 404) {
-      throw NotFoundException();
+      Map body = jsonDecode(response.body);
+      throw NotFoundException(body['message']);
+      // throw NotFoundException();
     } else {
       throw ServerException();
     }
